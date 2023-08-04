@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  database:
+    restart: always
+    build: arkhanna-database/
+    command: --lower_case_table_names=1
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 20s
+    expose:
+      - "3306"
+    networks:
+      - arkhanna-net
+
+networks:
+  arkhanna-net:
+    driver: bridge
+
+volumes:
+  db_data:
