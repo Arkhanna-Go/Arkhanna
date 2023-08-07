@@ -17,6 +17,15 @@ services:
     networks:
       - arkhanna-net
 
+   master-server:
+     restart: always
+     depends_on:
+       database:
+        condition: service_healthy
+     build: arkhanna-master-server
+     networks:
+       - arkhanna-net
+
 networks:
   arkhanna-net:
     driver: bridge
